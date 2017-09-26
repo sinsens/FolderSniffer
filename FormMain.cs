@@ -70,7 +70,7 @@ namespace FolderSniffer
             }
         }
 
-        private static void btnExit_Click(object sender, EventArgs e)
+        private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
