@@ -48,10 +48,10 @@ namespace FolderSniffer
 
             using (SaveFileDialog ofd = new SaveFileDialog())
             {
-                ofd.Title    = "保存为Excel文件";
-                var t        = DateTime.Now;
+                ofd.Title = "保存为Excel文件";
+                var t = DateTime.Now;
                 ofd.FileName = "目录占用分析_" + t.Year + "_" + t.Month + "_" + t.Day;
-                ofd.Filter   = "Excel表格文件(*.xlsx)|*.xlsx";
+                ofd.Filter = "Excel表格文件(*.xlsx)|*.xlsx";
 
                 try
                 {
@@ -123,7 +123,7 @@ namespace FolderSniffer
                         Worker.Flv.LogCat(e.Message);
                     }
                 }
-                
+
             }
         }
     }

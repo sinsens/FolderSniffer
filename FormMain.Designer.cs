@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.tbPath = new System.Windows.Forms.TextBox();
             this.btnSelectFolder = new System.Windows.Forms.Button();
@@ -41,6 +41,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cbxCountFiles = new System.Windows.Forms.CheckBox();
             this.cbxDebug = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,7 +68,9 @@
             this.btnSelectFolder.Name = "btnSelectFolder";
             this.btnSelectFolder.Size = new System.Drawing.Size(75, 23);
             this.btnSelectFolder.TabIndex = 2;
+            this.btnSelectFolder.Tag = "";
             this.btnSelectFolder.Text = "浏览";
+            this.toolTip1.SetToolTip(this.btnSelectFolder, "选择一个文件夹来分析");
             this.btnSelectFolder.UseVisualStyleBackColor = true;
             this.btnSelectFolder.Click += new System.EventHandler(this.btnSelectFolder_Click);
             // 
@@ -84,11 +87,13 @@
             // 
             // btnCalculate
             // 
+            this.btnCalculate.AccessibleDescription = "";
             this.btnCalculate.Location = new System.Drawing.Point(509, 66);
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.Size = new System.Drawing.Size(96, 23);
             this.btnCalculate.TabIndex = 4;
             this.btnCalculate.Text = "计算";
+            this.toolTip1.SetToolTip(this.btnCalculate, "开始计算");
             this.btnCalculate.UseVisualStyleBackColor = true;
             this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
@@ -99,6 +104,7 @@
             this.btnExportExcel.Size = new System.Drawing.Size(96, 23);
             this.btnExportExcel.TabIndex = 4;
             this.btnExportExcel.Text = "导出到Excel";
+            this.toolTip1.SetToolTip(this.btnExportExcel, "把结果保存为Excel报表文件");
             this.btnExportExcel.UseVisualStyleBackColor = true;
             this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
             // 
@@ -109,6 +115,7 @@
             this.btnExit.Size = new System.Drawing.Size(96, 23);
             this.btnExit.TabIndex = 4;
             this.btnExit.Text = "退出";
+            this.toolTip1.SetToolTip(this.btnExit, "退出程序");
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
@@ -129,6 +136,7 @@
             this.lbExplain.Size = new System.Drawing.Size(59, 12);
             this.lbExplain.TabIndex = 5;
             this.lbExplain.Text = "[explain]";
+            this.toolTip1.SetToolTip(this.lbExplain, "目录提示信息");
             // 
             // label3
             // 
@@ -148,6 +156,7 @@
             this.cbxCountFiles.Size = new System.Drawing.Size(96, 16);
             this.cbxCountFiles.TabIndex = 6;
             this.cbxCountFiles.Text = "计算文件数量";
+            this.toolTip1.SetToolTip(this.cbxCountFiles, "勾选后计算时会统计文件数量");
             this.cbxCountFiles.UseVisualStyleBackColor = true;
             // 
             // cbxDebug
@@ -158,7 +167,14 @@
             this.cbxDebug.Size = new System.Drawing.Size(72, 16);
             this.cbxDebug.TabIndex = 6;
             this.cbxDebug.Text = "调试模式";
+            this.toolTip1.SetToolTip(this.cbxDebug, "勾选后会启用调试模式");
             this.cbxDebug.UseVisualStyleBackColor = true;
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutoPopDelay = 5000;
+            this.toolTip1.InitialDelay = 500;
+            this.toolTip1.ReshowDelay = 100;
             // 
             // FormMain
             // 
@@ -190,8 +206,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbPath;
         private System.Windows.Forms.Button btnSelectFolder;
@@ -204,6 +218,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox cbxCountFiles;
         private System.Windows.Forms.CheckBox cbxDebug;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
