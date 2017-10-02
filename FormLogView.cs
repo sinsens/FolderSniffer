@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace FolderSniffer
@@ -15,10 +9,11 @@ namespace FolderSniffer
         {
             InitializeComponent();
         }
-        
-        public void LogCat(string msg) {
+
+        public void LogCat(string msg)
+        {
             var t = DateTime.Now.ToLongTimeString();
-            tbLog.AppendText("\n" + t + " " + msg+"\r");
+            tbLog.AppendText("\n" + t + " " + msg + "\r");
         }
     }
 }

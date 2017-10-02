@@ -3,20 +3,20 @@ using System.Data;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-
 namespace FolderSniffer
 {
     public partial class FormMain : Form
     {
+        /// <summary>
+        ///     窗口默认标题
+        /// </summary>
+        private readonly string _tiltle;
+
         public FormMain()
         {
             InitializeComponent();
             _tiltle = Text;
         }
-        /// <summary>
-        /// 窗口默认标题
-        /// </summary>
-        private readonly string _tiltle;
 
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
@@ -30,13 +30,9 @@ namespace FolderSniffer
         private void btnCalculate_Click(object sender, EventArgs e)
         {
             if (tbPath.TextLength <= 1)
-            {
-                MessageBox.Show("请先选择文件夹"); return;
-            }
+                MessageBox.Show("请先选择文件夹");
             else
-            {
                 Calculate(tbPath.Text);
-            }
         }
 
         private void btnExportExcel_Click(object sender, EventArgs e)
@@ -47,7 +43,7 @@ namespace FolderSniffer
                 return;
             }
 
-            using (SaveFileDialog ofd = new SaveFileDialog())
+            using (var ofd = new SaveFileDialog())
             {
                 ofd.Title = "保存为Excel文件";
                 var t = DateTime.Now;
@@ -60,7 +56,7 @@ namespace FolderSniffer
                     // 判断是否单击了“保存”按钮
                     if (dr == DialogResult.OK)
                     {
-                        DT2Excel.OutDataToExcel2((DataTable)dataGridView1.DataSource, ofd.FileName);
+                        DT2Excel.OutDataToExcel2((DataTable) dataGridView1.DataSource, ofd.FileName);
                         MessageBox.Show("保存成功！");
                     }
                 }
@@ -77,7 +73,7 @@ namespace FolderSniffer
         }
 
         /// <summary>
-        /// 开始分析
+        ///     开始分析
         /// </summary>
         /// <param name="fpath">文件夹路径</param>
         private void Calculate(string fpath)
@@ -93,13 +89,13 @@ namespace FolderSniffer
                 Worker.Flv.Show();
             }
 
-            using (DataTable dt = Worker.GenFolderSize(fpath, cbxDebug.Checked))
+            using (var dt = Worker.GenFolderSize(fpath, cbxDebug.Checked))
             {
-                dataGridView1.DataSource= dt;
-                var folderCount = dataGridView1.Rows.Count;// 文件夹数量
+                dataGridView1.DataSource = dt;
+                var folderCount = dataGridView1.Rows.Count; // 文件夹数量
                 Text = _tiltle;
-                double length = 0;// 计算文件大小
-                var fcount = 0;// 计算文件数量
+                double length = 0; // 计算文件大小
+                var fcount = 0; // 计算文件数量
                 foreach (DataRow item in dt.Rows)
                 {
                     length += Convert.ToDouble(item["大小"]);
@@ -109,10 +105,22 @@ namespace FolderSniffer
                 try
                 {
                     // 按GB,MB,KB,Bytes计算总大小
-                    var slength = length > 1024 * 1024 * 1024 ? Math.Round(length / 1024 / 1024 / 1024, 4) + "GB" : length > 1024 * 1024 ? Math.Round(length / 1024 / 1024, 4) + "MB" : length > 1024 ? length / 1024 + "KB" : length + "Bytes";
+                    var slength = length > 1024 * 1024 * 1024
+                        ? Math.Round(length / 1024 / 1024 / 1024, 4) + "GB"
+                        : length > 1024 * 1024
+                            ? Math.Round(length / 1024 / 1024, 4) + "MB"
+                            : length > 1024
+                                ? length / 1024 + "KB"
+                                : length + "Bytes";
                     // 总结提示信息
                     var msg = "共有 " + folderCount + " 个文件夹" + "," + fcount + " 个文件,占用储存空间 " + slength + "\n";
-                    msg += "平均文件夹大小为 " + (length > 1024 * 1024 * 1024 ? Math.Round(length / 1024 / 1024 / 1024 / folderCount, 4) + "GB" : length > 1024 * 1024 ? Math.Round(length / 1024 / 1024 / folderCount, 4) + "MB" : length > 1024 ? length / 1024 / folderCount + "KB" : length + "Bytes");
+                    msg += "平均文件夹大小为 " + (length > 1024 * 1024 * 1024
+                               ? Math.Round(length / 1024 / 1024 / 1024 / folderCount, 4) + "GB"
+                               : length > 1024 * 1024
+                                   ? Math.Round(length / 1024 / 1024 / folderCount, 4) + "MB"
+                                   : length > 1024
+                                       ? length / 1024 / folderCount + "KB"
+                                       : length + "Bytes");
                     msg += "。平均文件数量为 " + fcount / folderCount;
                     // 显示提示信息
                     lbExplain.Text = msg;
@@ -120,11 +128,8 @@ namespace FolderSniffer
                 catch (Exception e)
                 {
                     if (cbxDebug.Checked)
-                    {
                         Worker.Flv.LogCat(e.Message);
-                    }
                 }
-
             }
         }
 
@@ -132,7 +137,7 @@ namespace FolderSniffer
         {
             /// copy from http://www.cnblogs.com/davidyang78/archive/2011/09/21/2183145.html
             var fpath = tbPath.Text + "\\" + dataGridView1.Rows[e.RowIndex].Cells[0].Value;
-            using (Process proc = new Process())
+            using (var proc = new Process())
             {
                 proc.StartInfo.FileName = "explorer";
                 //打开资源管理器

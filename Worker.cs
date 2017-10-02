@@ -6,9 +6,12 @@ namespace FolderSniffer
 {
     public static class Worker
     {
+        private static readonly object Obj = new object();
+        public static FormLogView Flv; // 日志窗口对象
+
         /// <summary>
-        /// 获取文件夹子目录大小并返回DataTable
-        /// Sinsen, 2017-09-25 
+        ///     获取文件夹子目录大小并返回DataTable
+        ///     Sinsen, 2017-09-25
         /// </summary>
         /// <param name="fpath"></param>
         /// <param name="debug">启用调试:false</param>
@@ -21,17 +24,23 @@ namespace FolderSniffer
             dt.Columns.Add("大小");
             dt.Columns.Add("可视化大小");
             dt.Columns.Add("最后更新日期");
-                dt.Columns.Add("文件数量");
+            dt.Columns.Add("文件数量");
             var di = new DirectoryInfo(fpath);
 
             foreach (var item in di.GetDirectories())
             {
-                FolderInfo f = FolderSize(item.FullName, debug);
+                var f = FolderSize(item.FullName, debug);
                 float length = f.Length;
                 var dr = dt.NewRow();
                 dr["文件夹名"] = item.Name;
                 dr["大小"] = length;
-                dr["可视化大小"] = length > 1024 * 1024 * 1024 ? length / 1024 / 1024 / 1024 + "GB" : length > 1024 * 1024 ? length / 1024 / 1024 + "MB" : length > 1024 ? length / 1024 + "KB" : length + "Bytes";
+                dr["可视化大小"] = length > 1024 * 1024 * 1024
+                    ? length / 1024 / 1024 / 1024 + "GB"
+                    : length > 1024 * 1024
+                        ? length / 1024 / 1024 + "MB"
+                        : length > 1024
+                            ? length / 1024 + "KB"
+                            : length + "Bytes";
                 dr["最后更新日期"] = item.LastWriteTime;
                 dr["文件数量"] = f.FileCount;
                 dt.Rows.Add(dr);
@@ -40,8 +49,8 @@ namespace FolderSniffer
         }
 
         /// <summary>
-        /// 获取文件夹大小
-        /// Sinsen, 2017-09-25 
+        ///     获取文件夹大小
+        ///     Sinsen, 2017-09-25
         /// </summary>
         /// <param name="fpath">文件夹路径</param>
         /// <param name="debug">调试模式:false</param>
@@ -68,21 +77,16 @@ namespace FolderSniffer
             catch (Exception ex)
             {
                 if (debug)
-                {
                     LogCat(ex.Message);
-                }
             }
             return f;
         }
 
-        static readonly object Obj = new object();
-        public static FormLogView Flv; // 日志窗口对象
-
         /// <summary>
-        /// 记录日志
+        ///     记录日志
         /// </summary>
         /// <param name="msg"></param>
-        static void LogCat(string msg)
+        private static void LogCat(string msg)
         {
             // 锁住
             lock (Obj)
