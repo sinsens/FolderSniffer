@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DT2Excel.cs" />
+    <Compile Include="FolderInfo.cs" />
     <Compile Include="FormLogView.cs">
       <SubType>Form</SubType>
     </Compile>

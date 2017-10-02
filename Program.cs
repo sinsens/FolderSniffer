@@ -15,7 +15,10 @@ namespace FolderSniffer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain());
+            using (var formMain = new FormMain())
+            {
+                Application.Run(formMain);
+            }
         }
     }
 }

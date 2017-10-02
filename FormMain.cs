@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 
@@ -92,9 +93,9 @@ namespace FolderSniffer
                 Worker.Flv.Show();
             }
 
-            using (DataTable dt = Worker.GenFolderSize(fpath, cbxCountFiles.Checked, cbxDebug.Checked))
+            using (DataTable dt = Worker.GenFolderSize(fpath, cbxDebug.Checked))
             {
-                dataGridView1.DataSource = dt;
+                dataGridView1.DataSource= dt;
                 var folderCount = dataGridView1.Rows.Count;// 文件夹数量
                 Text = _tiltle;
                 double length = 0;// 计算文件大小
@@ -103,7 +104,7 @@ namespace FolderSniffer
                 {
                     length += Convert.ToDouble(item["大小"]);
 
-                    fcount += cbxCountFiles.Checked ? Convert.ToInt32(item["文件数量"]) : 0;
+                    fcount += Convert.ToInt32(item["文件数量"]);
                 }
                 try
                 {
@@ -124,6 +125,19 @@ namespace FolderSniffer
                     }
                 }
 
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            /// copy from http://www.cnblogs.com/davidyang78/archive/2011/09/21/2183145.html
+            var fpath = tbPath.Text + "\\" + dataGridView1.Rows[e.RowIndex].Cells[0].Value;
+            using (Process proc = new Process())
+            {
+                proc.StartInfo.FileName = "explorer";
+                //打开资源管理器
+                proc.StartInfo.Arguments = @"/e," + fpath;
+                proc.Start();
             }
         }
     }

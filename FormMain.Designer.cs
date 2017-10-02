@@ -39,7 +39,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbExplain = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.cbxCountFiles = new System.Windows.Forms.CheckBox();
             this.cbxDebug = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -84,6 +83,7 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(463, 284);
             this.dataGridView1.TabIndex = 3;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // btnCalculate
             // 
@@ -148,17 +148,6 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "温馨提示：因为磁盘文件系统的原因，文件夹占用空间一般大于等于所有文件大小之和";
             // 
-            // cbxCountFiles
-            // 
-            this.cbxCountFiles.AutoSize = true;
-            this.cbxCountFiles.Location = new System.Drawing.Point(311, 44);
-            this.cbxCountFiles.Name = "cbxCountFiles";
-            this.cbxCountFiles.Size = new System.Drawing.Size(96, 16);
-            this.cbxCountFiles.TabIndex = 6;
-            this.cbxCountFiles.Text = "计算文件数量";
-            this.toolTip1.SetToolTip(this.cbxCountFiles, "勾选后计算时会统计文件数量");
-            this.cbxCountFiles.UseVisualStyleBackColor = true;
-            // 
             // cbxDebug
             // 
             this.cbxDebug.AutoSize = true;
@@ -183,7 +172,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(617, 406);
             this.Controls.Add(this.cbxDebug);
-            this.Controls.Add(this.cbxCountFiles);
             this.Controls.Add(this.lbExplain);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -216,7 +204,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lbExplain;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox cbxCountFiles;
         private System.Windows.Forms.CheckBox cbxDebug;
         private System.Windows.Forms.ToolTip toolTip1;
     }
